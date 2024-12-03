@@ -5,11 +5,26 @@ const blog = require("../data/post.js");  // Tutti i posts
 
 // index
 router.get("/", (req, res) => {
+    const itemName = req.query.titolo;
+  console.log(itemName);
     let response = {
         count: blog.length,
         data: [...blog],
         // copia dell'array nel caso dovessimo filtrare i dati
     };
+    if (itemName) {
+        response.data = blog.filter((item) =>
+          item.titolo.toLowerCase().includes(itemName.toLowerCase())
+        );
+    
+        // if (response.data.length < 1) {
+        //   res.status(404);
+        //   response = {
+        //     error: 404,
+        //     message: "Non ci sono pizze per la tua ricerca",
+        //   };
+        // }
+      }
     res.json(response);
 });
 

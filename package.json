@@ -1,7 +1,7 @@
 {
   "name": "express-blog-routing",
   "version": "1.0.0",
-  "description": "Node express",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
