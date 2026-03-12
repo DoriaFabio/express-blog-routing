@@ -3,11 +3,12 @@ const router = express.Router();
 
 const blog = require("../data/post.js");  // Tutti i posts
 
-let id = ""; 
+let id = "";
 // index
 router.get("/", (req, res) => {
     const itemName = req.query.titolo;
-  console.log(itemName);
+    const itemTags = req.query.tags;
+    console.log(itemName);
     let response = {
         count: blog.length,
         data: [...blog],
@@ -15,9 +16,13 @@ router.get("/", (req, res) => {
     };
     if (itemName) {
         response.data = blog.filter((item) =>
-          item.titolo.toLowerCase().includes(itemName.toLowerCase())
+            item.titolo.toLowerCase().includes(itemName.toLowerCase())
         );
-    
+        if (itemTags) {
+            response.data = blog.filter((item) =>
+                item.tags.includes(itemTags.toLowerCase())
+            );
+        }
         // if (response.data.length < 1) {
         //   res.status(404);
         //   response = {
@@ -25,7 +30,7 @@ router.get("/", (req, res) => {
         //     message: "Non ci sono post per la tua ricerca",
         //   };
         // }
-      }
+    }
     res.json(response);
 });
 
@@ -81,7 +86,7 @@ router.patch("/:id", (req, res) => {
             message: `Il post ${id} non esiste`,
         });
     }
-    
+
 });
 
 //Delete (cancellazione) - Destroy
